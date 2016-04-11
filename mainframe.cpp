@@ -672,6 +672,7 @@ void MainFrame::initForm()
     ui->labelTitle->setText(tr("智能火情监测平台"));
  //   ui->treeWidget->header()->setVisible(false);
     ui->treeWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止编辑
+    ui->treeWidget->setFocusPolicy(Qt::NoFocus);
     ui->treeWidget->expandAll();//展开所有节点
 
 }
@@ -766,7 +767,7 @@ void MainFrame::initVideo()
         videoProcessorList[i]->moveToThread(videoThreadList[i]);
         videoChannelOpenList.append(false);
         connect(videoThreadList[i],SIGNAL(finished()),videoProcessorList[i],SLOT(deleteLater()));
-       // videoThreadList[i]->start();
+        videoThreadList[i]->start();
         connect(videoProcessorList[i],SIGNAL(processEnd(int,QPixmap)),this,SLOT(paintVideoFrame(int,QPixmap)));
         connect(videoProcessorList[i],SIGNAL(sendAlarm(int,QString)),this,SLOT(sendAlarmEmail(int,QString)));
     }

@@ -13,8 +13,8 @@ TEMPLATE = app
 
 #openCV设置
 
-INCLUDEPATH += D:/Qt/opencv/opencv/build/include
-LIBS += D:/Qt/opencv/opencv/build/x86/mingw/bin/*.dll
+INCLUDEPATH += E:/Qt/opencv/opencv/build/include
+LIBS += E:/Qt/opencv/opencv/build/x86/mingw/bin/*.dll
 #end opencv
 
 SOURCES += main.cpp\
