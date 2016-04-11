@@ -258,7 +258,7 @@ Mat VideoProcessor::ImgPreProcess(Mat rgbimg, int model)
             double S = color_S/255.0;//将饱和度转换回 [0-1]
            // double S1 = 1-3.0*color_min/(color_R + color_G + color_B);
             //RGB约束模型 1.R>RT 2.R>=G>=B 3.S>=(255-R)*ST/RT
-            if(color_R > RT && color_R >= color_G && color_G >= color_B
+            if(color_R > RT && color_R > color_G && color_G > color_B
                     && S >= ds)
             {
                 isMeetRGB = true;
@@ -369,7 +369,8 @@ bool VideoProcessor::FiredectetionImg(Mat &detecimg, Mat &sourceimg, int model)
     newDetectNum = hierarchy.size();
     if(newDetectNum > oldDetectNum)
     {
-       detectSum += 2;//增长步长比下降快-检测快 消失慢
+       if(detectSum < detectSumMax*2)
+            detectSum += 2;//增长步长比下降快-检测快 消失慢
        if(detectSum > detectSumMax)
        {
              is_Fire = true;
@@ -385,7 +386,8 @@ bool VideoProcessor::FiredectetionImg(Mat &detecimg, Mat &sourceimg, int model)
     {
         if(newDetectNum > 0)
         {
-            detectSum++;
+            if(detectSum < detectSumMax*2)
+            detectSum ++;
             if(detectSum > detectSumMax)
             {
                   is_Fire = true;
@@ -400,10 +402,35 @@ bool VideoProcessor::FiredectetionImg(Mat &detecimg, Mat &sourceimg, int model)
         }
         else
         {
+            if(detectSum > 0)
             detectSum--;
         }
     }
     oldDetectNum = newDetectNum;
+  /*  if(hierarchy.size() > 0)//绘制轮廓矩形
+    {
+        detectSum +=2;//增长步长比下降快-检测快 消失慢
+        if(detectSum > detectSumMax)
+        {
+              is_Fire = true;
+            //  emit sendAlarm(videoID);
+              for(int idx = 0;idx>=0;idx=hierarchy[idx][0])//绘制矩形圈出火焰
+              {
+                 Scalar color(0,0,255);
+                 Rect rect = boundingRect(contours.at(idx));
+                 rectangle(sourceimg,rect,color,2);//在源图像上绘制轮廓矩形
+              }
+        }
+    }
+    else
+    {
+        if(detectSum > 0)
+            detectSum--;
+    }*/
+
+  //  drawContours(result_img,contours,-1,Scalar(255),1);
+  //  imshow("find contours",result_img);
+   // drawContours(sourceimg,contours,-1,Scalar(255),-1);
     return is_Fire;
 }
 
