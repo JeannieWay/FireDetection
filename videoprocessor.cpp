@@ -250,13 +250,10 @@ Mat VideoProcessor::ImgPreProcess(Mat rgbimg, int model)
             uchar color_H = pixe2[0];
             uchar color_L = pixe2[1];
             uchar color_S = pixe2[2];
-
-           /* double d1 = (double)color_G/(color_R + 1.0);
-            double d2 = (double)color_B/(color_R + 1.0);
-            double d3 = (double)color_B/(color_G + 1.0);*/
+        
             double ds = (255.0 - color_R)*RT/ST;
             double S = color_S/255.0;//将饱和度转换回 [0-1]
-           // double S1 = 1-3.0*color_min/(color_R + color_G + color_B);
+           
             //RGB约束模型 1.R>RT 2.R>=G>=B 3.S>=(255-R)*ST/RT
             if(color_R > RT && color_R > color_G && color_G > color_B
                     && S >= ds)
@@ -330,9 +327,7 @@ Mat VideoProcessor::ImgPreProcess(Mat rgbimg, int model)
             tempimg.at<Vec3b>(i,j) = pixel;
         }
     }
-    //cvtColor(tempimg,tempimg,CV_YCrCb2BGR);
     cvtColor(tempimg,dst,CV_BGR2GRAY);
-   // cvtColor(tempimg2,hsiImg,CV_HLS2BGR);
     return dst;
 
 }
@@ -352,7 +347,6 @@ bool VideoProcessor::FiredectetionImg(Mat &detecimg, Mat &sourceimg, int model)
     //均值滤波:输入图像，输出图像，模板大小，被平滑点位置（负值为中心）
     blur(result_img,result_img,Size(5,5),Point(0,0));
     threshold(result_img,result_img,40,255,CV_THRESH_BINARY);//二值化
-   // threshold(result_img,result_img,40,255,CV_THRESH_OTSU);
     //高斯滤波:输入图像，输出图像，模板大小（奇数），x方向差，y方向差
     GaussianBlur(result_img,result_img,Size(5,5),0,0);//高斯滤波
     erode(result_img,result_img,Mat());//腐蚀
@@ -365,7 +359,6 @@ bool VideoProcessor::FiredectetionImg(Mat &detecimg, Mat &sourceimg, int model)
     vector<Vec4i> hierarchy;
     //查找轮廓
     findContours(result_img,contours,hierarchy,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_SIMPLE);
-   // imshow("findContors",result_img);
     newDetectNum = hierarchy.size();
     if(newDetectNum > oldDetectNum)
     {
@@ -391,7 +384,6 @@ bool VideoProcessor::FiredectetionImg(Mat &detecimg, Mat &sourceimg, int model)
             if(detectSum > detectSumMax)
             {
                   is_Fire = true;
-                //  emit sendAlarm(videoID);
                   for(int idx = 0;idx>=0;idx=hierarchy[idx][0])//绘制矩形圈出火焰
                   {
                      Scalar color(0,0,255);
@@ -407,30 +399,6 @@ bool VideoProcessor::FiredectetionImg(Mat &detecimg, Mat &sourceimg, int model)
         }
     }
     oldDetectNum = newDetectNum;
-  /*  if(hierarchy.size() > 0)//绘制轮廓矩形
-    {
-        detectSum +=2;//增长步长比下降快-检测快 消失慢
-        if(detectSum > detectSumMax)
-        {
-              is_Fire = true;
-            //  emit sendAlarm(videoID);
-              for(int idx = 0;idx>=0;idx=hierarchy[idx][0])//绘制矩形圈出火焰
-              {
-                 Scalar color(0,0,255);
-                 Rect rect = boundingRect(contours.at(idx));
-                 rectangle(sourceimg,rect,color,2);//在源图像上绘制轮廓矩形
-              }
-        }
-    }
-    else
-    {
-        if(detectSum > 0)
-            detectSum--;
-    }*/
-
-  //  drawContours(result_img,contours,-1,Scalar(255),1);
-  //  imshow("find contours",result_img);
-   // drawContours(sourceimg,contours,-1,Scalar(255),-1);
     return is_Fire;
 }
 
