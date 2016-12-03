@@ -19,30 +19,35 @@ SysConfigDialog::~SysConfigDialog()
 
 void SysConfigDialog::on_button_OK_clicked()
 {
-    if(SysConfigInfo::smtpHost.isEmpty())
+    if(ui->smtpName->text().isEmpty())
     {
         QMessageBox::warning(this,tr("错误"),tr("smtp服务器设置错误！"));
         return;
     }
-    if(SysConfigInfo::userName.isEmpty())
+    if(ui->userName->text().isEmpty())
     {
         QMessageBox::warning(this,tr("错误"),tr("用户名不能为空！"));
         return;
     }
-    if(SysConfigInfo::password.isEmpty())
+    if(ui->password->text().isEmpty())
     {
         QMessageBox::warning(this,tr("错误"),tr("密码不能为空！"));
         return;
     }
-    if(SysConfigInfo::recivers.isEmpty())
+    if(ui->receivers->text().isEmpty())
     {
         QMessageBox::warning(this,tr("错误"),tr("收件人不能为空！"));
         return;
     }
-    if(SysConfigInfo::emalSubjec.isEmpty())
+    if(ui->subject->text().isEmpty())
     {
         SysConfigInfo::emalSubjec = tr("检测到疑似火情");
     }
+    SysConfigInfo::smtpHost = ui->smtpName->text();
+    SysConfigInfo::smtpPort = ui->smtpPort->text().toInt();
+    SysConfigInfo::userName = ui->userName->text();
+    SysConfigInfo::password = ui->password->text();
+    SysConfigInfo::recivers = ui->receivers->text();
     SysConfigInfo::isAlarmOpen_1 = ui->pushButton_1->getCheck();
     SysConfigInfo::isAlarmOpen_2 = ui->pushButton_2->getCheck();
     SysConfigInfo::isAlarmOpen_3 = ui->pushButton_3->getCheck();
