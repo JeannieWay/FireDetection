@@ -34,8 +34,11 @@ private slots:
     void closeCurrentVideo();//关闭当前视频通道
     void closeAllVideo();//关闭所有视频通道
 
-    void paintFrame();
-    void paintVideoFrame(int index,QPixmap pixmap);
+    void paintFrame();//定时绘制帧处理
+    void paintVideoFrame(int index,QPixmap pixmap);//接收检测结果绘制带轮廓画面
+
+    //--ViBe
+    void paintFrameWithViBe();//定时用ViBe处理绘制帧
 
     void showVideo_1();//切换到1画面
     void showVideo_4();

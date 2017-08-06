@@ -4,7 +4,6 @@ SwitchButton::SwitchButton(QWidget *parent):QPushButton(parent)
 {
     setCursor(QCursor(Qt::PointingHandCursor));
     isChecked = false;
-    //background-image
     styleOn = "border-image: url(:/images/images/switch_on.png); border: 0px;";
     styleOff = "border-image: url(:/images/images/switch_off.png); border: 0px;";
     setFixedSize(70,35);

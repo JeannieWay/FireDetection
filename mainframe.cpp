@@ -398,6 +398,85 @@ void MainFrame::paintVideoFrame(int index, QPixmap pixmap)
     videoLabList[index]->setPixmap(pixmap);
 }
 
+void MainFrame::paintFrameWithViBe()
+{
+    QTimer *timer = (QTimer *)sender();
+    int index;
+    if(timer == videoTimerList[0])
+    {
+        index = 0;
+    }
+    else if (timer == videoTimerList[1])
+    {
+        index = 1;
+    }
+    else if (timer == videoTimerList[2])
+    {
+        index = 2;
+    }
+    else if (timer == videoTimerList[3])
+    {
+        index = 3;
+    }
+    else if (timer == videoTimerList[4])
+    {
+        index = 4;
+    }
+    else if (timer == videoTimerList[5])
+    {
+        index = 5;
+    }
+    else if (timer == videoTimerList[6])
+    {
+        index = 6;
+    }
+    else if (timer == videoTimerList[7])
+    {
+        index = 7;
+    }
+    else if (timer == videoTimerList[8])
+    {
+        index = 8;
+    }
+    else if (timer == videoTimerList[9])
+    {
+        index = 9;
+    }
+    else if (timer == videoTimerList[10])
+    {
+        index = 10;
+    }
+    else if (timer == videoTimerList[11])
+    {
+        index = 11;
+    }
+    else if (timer == videoTimerList[12])
+    {
+        index = 12;
+    }
+    else if (timer == videoTimerList[13])
+    {
+        index = 13;
+    }
+    else if (timer == videoTimerList[14])
+    {
+        index = 14;
+    }
+    else if (timer == videoTimerList[15])
+    {
+        index = 15;
+    }
+    else if (timer == videoTimerList[16])
+    {
+        index = 16;
+    }
+    else
+    {
+        return;
+    }
+    videoProcessorList[index]->processVideoWithViBe(index);
+}
+
 void MainFrame::showVideo_1()
 {
     removeLayout();
@@ -519,6 +598,7 @@ void MainFrame::choiceIPCSource()
     videoProcessorList[index]->openVideo(0);//打开默认摄像头
     videoChannelOpenList[index] = true;
     videoTimerList[index]->start(20);
+    //connect(videoTimerList[index],SIGNAL(timeout()),this,SLOT(paintFrame()));
     connect(videoTimerList[index],SIGNAL(timeout()),this,SLOT(paintFrame()));
 }
 
@@ -533,7 +613,8 @@ void MainFrame::choiceVideoSource()
     videoProcessorList[index]->openVideo(fileName);
     videoChannelOpenList[index] = true;
     videoTimerList[index]->start(videoProcessorList[index]->getFrameTime());
-    connect(videoTimerList[index],SIGNAL(timeout()),this,SLOT(paintFrame()));
+  //  connect(videoTimerList[index],SIGNAL(timeout()),this,SLOT(paintFrame()));
+    connect(videoTimerList[index],SIGNAL(timeout()),this,SLOT(paintFrameWithViBe()));
 }
 
 void MainFrame::foreDetectSet()
