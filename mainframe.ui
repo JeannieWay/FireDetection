@@ -310,7 +310,7 @@
         </column>
         <item>
          <property name="text">
-          <string>江西农业大学</string>
+          <string>XXXX大学</string>
          </property>
          <property name="icon">
           <iconset resource="images.qrc">
@@ -318,7 +318,7 @@
          </property>
          <item>
           <property name="text">
-           <string>惟义楼</string>
+           <string>主教学楼</string>
           </property>
           <property name="icon">
            <iconset resource="images.qrc">
@@ -454,7 +454,7 @@
         </item>
         <item>
          <property name="text">
-          <string>农大商学院</string>
+          <string>XXX学院</string>
          </property>
          <property name="icon">
           <iconset resource="images.qrc">

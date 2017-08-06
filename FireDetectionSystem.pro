@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui network
-
+CONFIG += c++11
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = FireDetectionSystem
@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     src/smtpclient.cpp \
     sysconfigdialog.cpp \
     switchbutton.cpp \
-    sysconfiginfo.cpp
+    sysconfiginfo.cpp \
+    firevibe.cpp
 
 HEADERS  += \
     videoprocessor.h \
@@ -54,7 +55,8 @@ HEADERS  += \
     src/SmtpMime \
     sysconfigdialog.h \
     switchbutton.h \
-    sysconfiginfo.h
+    sysconfiginfo.h \
+    firevibe.h
 
 FORMS    += mainframe.ui \
     sysconfigdialog.ui
